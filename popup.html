@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+    <h2>SOCi URL Helper</h2>
+
+    <div id="not-soci" class="hidden">
+      <p class="muted">Not a SOCi page.</p>
+      <p class="muted">Build a URL manually:</p>
+    </div>
+
+    <div class="field">
+      <label for="tenant">Tenant</label>
+      <input id="tenant" type="text" placeholder="app" spellcheck="false">
+    </div>
+
+    <div class="field">
+      <label for="account">Account ID</label>
+      <input id="account" type="text" placeholder="e.g. 3596" spellcheck="false">
+    </div>
+
+    <button id="go">Go</button>
+
+    <div id="preview" class="preview muted"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

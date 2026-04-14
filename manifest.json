@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "SOCi URL Helper",
+  "version": "1.0",
+  "description": "Quickly edit tenant and account ID in SOCi URLs",
+  "permissions": ["tabs", "activeTab"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "SOCi URL Helper"
+  }
+}
