@@ -107,11 +107,18 @@ button:active {
   margin: 14px 0 12px;
 }
 
+.btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
 button.secondary {
   background: transparent;
   color: #4a6fff;
   border: 1px solid #3a5fee;
-  margin-top: 6px;
+  margin-top: 0;
+  font-size: 12px;
 }
 
 button.secondary:hover {
