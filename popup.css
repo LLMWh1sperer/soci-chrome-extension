@@ -100,3 +100,33 @@ button:active {
   line-height: 1.4;
   min-height: 14px;
 }
+
+.divider {
+  border: none;
+  border-top: 1px solid #2a2a3e;
+  margin: 14px 0 12px;
+}
+
+button.secondary {
+  background: transparent;
+  color: #4a6fff;
+  border: 1px solid #3a5fee;
+  margin-top: 6px;
+}
+
+button.secondary:hover {
+  background: rgba(74, 111, 255, 0.12);
+  border-color: #6c8fff;
+  color: #6c8fff;
+}
+
+button.secondary:active {
+  background: rgba(74, 111, 255, 0.2);
+}
+
+button.secondary:disabled {
+  background: transparent;
+  color: #444;
+  border-color: #333;
+  cursor: default;
+}

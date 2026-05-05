@@ -30,6 +30,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
     tenantInput.value = 'app';
   }
   updatePreview();
+  updateAccountButtons();
 });
 
 tenantInput.addEventListener('input', updatePreview);
@@ -48,4 +49,65 @@ goBtn.addEventListener('click', () => {
   el.addEventListener('keydown', e => {
     if (e.key === 'Enter') goBtn.click();
   });
+});
+
+const listingsToolsBtn = document.getElementById('listings-tools');
+const kickListingsBtn = document.getElementById('kick-listings');
+const superBoBtn = document.getElementById('super-bo');
+const listingStatusBtn = document.getElementById('listing-status');
+const gmbTokenHealthBtn = document.getElementById('gmb-token-health');
+
+function updateAccountButtons() {
+  const hasAccount = !!accountInput.value.trim();
+  listingStatusBtn.disabled = !hasAccount;
+  gmbTokenHealthBtn.disabled = !hasAccount;
+}
+
+listingsToolsBtn.addEventListener('click', () => {
+  const t = tenantInput.value.trim() || 'app';
+  chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/listings/` });
+});
+
+kickListingsBtn.addEventListener('click', () => {
+  const t = tenantInput.value.trim() || 'app';
+  chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/listings/search_projects_by_network.php` });
+});
+
+superBoBtn.addEventListener('click', () => {
+  const t = tenantInput.value.trim() || 'app';
+  chrome.tabs.create({ url: `https://${t}.meetsoci.com/admin/super/0/backoffice` });
+});
+
+listingStatusBtn.addEventListener('click', () => {
+  const t = tenantInput.value.trim() || 'app';
+  const a = accountInput.value.trim();
+  if (!a) return;
+  chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/listings/listings_status.php?account_id=${a}` });
+});
+
+gmbTokenHealthBtn.addEventListener('click', () => {
+  const t = tenantInput.value.trim() || 'app';
+  const a = accountInput.value.trim();
+  if (!a) return;
+  chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/listings/account_gmb_groups.php?account_id=${a}` });
+});
+
+accountInput.addEventListener('input', updateAccountButtons);
+
+const jiraInput = document.getElementById('jira');
+const zdInput = document.getElementById('zd');
+
+jiraInput.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const raw = jiraInput.value.trim();
+  if (!raw) return;
+  const ticket = /^\d+$/.test(raw) ? `SO-${raw}` : raw.toUpperCase();
+  chrome.tabs.create({ url: `https://meetsoci.atlassian.net/browse/${ticket}` });
+});
+
+zdInput.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const num = zdInput.value.trim();
+  if (!num) return;
+  chrome.tabs.create({ url: `https://meetsoci.zendesk.com/agent/tickets/${num}` });
 });
