@@ -1,20 +1,23 @@
-const SOCI_PATTERN = /^https?:\/\/([^.]+)\.meetsoci\.com\/admin\/account\/(\d+)/;
+const SOCI_PATTERN = /^https?:\/\/([^.]+)\.meetsoci\.com\/admin\/account\/(\d+)(?:\/office\/\d+\/project\/(\d+))?/;
 
 const tenantInput = document.getElementById('tenant');
 const accountInput = document.getElementById('account');
+const projectInput = document.getElementById('project');
 const goBtn = document.getElementById('go');
 const preview = document.getElementById('preview');
 const notSoci = document.getElementById('not-soci');
 
-function buildUrl(tenant, accountId) {
+function buildUrl(tenant, accountId, projectId) {
   const t = tenant.trim() || 'app';
   const a = accountId.trim();
+  const p = projectId.trim();
   if (!a) return null;
-  return `https://${t}.meetsoci.com/admin/account/${a}`;
+  const base = `https://${t}.meetsoci.com/admin/account/${a}`;
+  return p ? `${base}/office/0/project/${p}` : base;
 }
 
 function updatePreview() {
-  const url = buildUrl(tenantInput.value, accountInput.value);
+  const url = buildUrl(tenantInput.value, accountInput.value, projectInput.value);
   preview.textContent = url || '';
 }
 
@@ -25,6 +28,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
   if (match) {
     tenantInput.value = match[1];
     accountInput.value = match[2];
+    if (match[3]) projectInput.value = match[3];
   } else {
     notSoci.classList.remove('hidden');
     tenantInput.value = 'app';
@@ -35,17 +39,16 @@ chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
 
 tenantInput.addEventListener('input', updatePreview);
 accountInput.addEventListener('input', updatePreview);
+projectInput.addEventListener('input', updatePreview);
 
 goBtn.addEventListener('click', () => {
-  const url = buildUrl(tenantInput.value, accountInput.value);
+  const url = buildUrl(tenantInput.value, accountInput.value, projectInput.value);
   if (!url) return;
-  chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
-    chrome.tabs.update(tab.id, { url });
-  });
+  chrome.tabs.create({ url });
 });
 
 // Allow Enter key to trigger Go
-[tenantInput, accountInput].forEach(el => {
+[tenantInput, accountInput, projectInput].forEach(el => {
   el.addEventListener('keydown', e => {
     if (e.key === 'Enter') goBtn.click();
   });
@@ -92,22 +95,22 @@ gmbTokenHealthBtn.addEventListener('click', () => {
   chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/listings/account_gmb_groups.php?account_id=${a}` });
 });
 
-accountInput.addEventListener('input', updateAccountButtons);
-
-const jiraInput = document.getElementById('jira');
-const zdInput = document.getElementById('zd');
-
-jiraInput.addEventListener('keydown', e => {
-  if (e.key !== 'Enter') return;
-  const raw = jiraInput.value.trim();
-  if (!raw) return;
-  const ticket = /^\d+$/.test(raw) ? `SO-${raw}` : raw.toUpperCase();
-  chrome.tabs.create({ url: `https://meetsoci.atlassian.net/browse/${ticket}` });
+document.getElementById('super-duper-bo').addEventListener('click', () => {
+  const t = tenantInput.value.trim() || 'app';
+  chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/platform/index.php` });
 });
 
-zdInput.addEventListener('keydown', e => {
+accountInput.addEventListener('input', updateAccountButtons);
+
+const ticketInput = document.getElementById('ticket');
+
+ticketInput.addEventListener('keydown', e => {
   if (e.key !== 'Enter') return;
-  const num = zdInput.value.trim();
-  if (!num) return;
-  chrome.tabs.create({ url: `https://meetsoci.zendesk.com/agent/tickets/${num}` });
+  const raw = ticketInput.value.trim();
+  if (!raw) return;
+  if (/^SO-\d+$/i.test(raw)) {
+    chrome.tabs.create({ url: `https://meetsoci.atlassian.net/browse/${raw.toUpperCase()}` });
+  } else {
+    chrome.tabs.create({ url: `https://meetsoci.zendesk.com/agent/tickets/${raw}` });
+  }
 });
