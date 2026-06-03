@@ -6,9 +6,10 @@ const projectInput = document.getElementById('project');
 const goBtn = document.getElementById('go');
 const preview = document.getElementById('preview');
 const notSoci = document.getElementById('not-soci');
+const DEFAULT_TENANT = 'moz';
 
 function buildUrl(tenant, accountId, projectId) {
-  const t = tenant.trim() || 'app';
+  const t = tenant.trim() || DEFAULT_TENANT;
   const a = accountId.trim();
   const p = projectId.trim();
   if (!a) return null;
@@ -31,7 +32,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
     if (match[3]) projectInput.value = match[3];
   } else {
     notSoci.classList.remove('hidden');
-    tenantInput.value = 'app';
+    tenantInput.value = DEFAULT_TENANT;
   }
   updatePreview();
   updateAccountButtons();
@@ -67,36 +68,36 @@ function updateAccountButtons() {
 }
 
 listingsToolsBtn.addEventListener('click', () => {
-  const t = tenantInput.value.trim() || 'app';
+  const t = tenantInput.value.trim() || DEFAULT_TENANT;
   chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/listings/` });
 });
 
 kickListingsBtn.addEventListener('click', () => {
-  const t = tenantInput.value.trim() || 'app';
+  const t = tenantInput.value.trim() || DEFAULT_TENANT;
   chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/listings/search_projects_by_network.php` });
 });
 
 superBoBtn.addEventListener('click', () => {
-  const t = tenantInput.value.trim() || 'app';
+  const t = tenantInput.value.trim() || DEFAULT_TENANT;
   chrome.tabs.create({ url: `https://${t}.meetsoci.com/admin/super/0/backoffice` });
 });
 
 listingStatusBtn.addEventListener('click', () => {
-  const t = tenantInput.value.trim() || 'app';
+  const t = tenantInput.value.trim() || DEFAULT_TENANT;
   const a = accountInput.value.trim();
   if (!a) return;
   chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/listings/listings_status.php?account_id=${a}` });
 });
 
 gmbTokenHealthBtn.addEventListener('click', () => {
-  const t = tenantInput.value.trim() || 'app';
+  const t = tenantInput.value.trim() || DEFAULT_TENANT;
   const a = accountInput.value.trim();
   if (!a) return;
   chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/listings/account_gmb_groups.php?account_id=${a}` });
 });
 
 document.getElementById('super-duper-bo').addEventListener('click', () => {
-  const t = tenantInput.value.trim() || 'app';
+  const t = tenantInput.value.trim() || DEFAULT_TENANT;
   chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/platform/index.php` });
 });
 
