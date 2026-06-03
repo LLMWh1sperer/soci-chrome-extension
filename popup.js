@@ -8,6 +8,18 @@ const preview = document.getElementById('preview');
 const notSoci = document.getElementById('not-soci');
 const DEFAULT_TENANT = 'moz';
 
+function getTenant() {
+  return tenantInput.value.trim() || DEFAULT_TENANT;
+}
+
+function getAccountId() {
+  return accountInput.value.trim();
+}
+
+function openUrl(url) {
+  chrome.tabs.create({ url });
+}
+
 function buildUrl(tenant, accountId, projectId) {
   const t = tenant.trim() || DEFAULT_TENANT;
   const a = accountId.trim();
@@ -62,43 +74,37 @@ const listingStatusBtn = document.getElementById('listing-status');
 const gmbTokenHealthBtn = document.getElementById('gmb-token-health');
 
 function updateAccountButtons() {
-  const hasAccount = !!accountInput.value.trim();
+  const hasAccount = !!getAccountId();
   listingStatusBtn.disabled = !hasAccount;
   gmbTokenHealthBtn.disabled = !hasAccount;
 }
 
 listingsToolsBtn.addEventListener('click', () => {
-  const t = tenantInput.value.trim() || DEFAULT_TENANT;
-  chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/listings/` });
+  openUrl(`https://${getTenant()}.meetsoci.com/internal/listings/`);
 });
 
 kickListingsBtn.addEventListener('click', () => {
-  const t = tenantInput.value.trim() || DEFAULT_TENANT;
-  chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/listings/search_projects_by_network.php` });
+  openUrl(`https://${getTenant()}.meetsoci.com/internal/listings/search_projects_by_network.php`);
 });
 
 superBoBtn.addEventListener('click', () => {
-  const t = tenantInput.value.trim() || DEFAULT_TENANT;
-  chrome.tabs.create({ url: `https://${t}.meetsoci.com/admin/super/0/backoffice` });
+  openUrl(`https://${getTenant()}.meetsoci.com/admin/super/0/backoffice`);
 });
 
 listingStatusBtn.addEventListener('click', () => {
-  const t = tenantInput.value.trim() || DEFAULT_TENANT;
-  const a = accountInput.value.trim();
+  const a = getAccountId();
   if (!a) return;
-  chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/listings/listings_status.php?account_id=${a}` });
+  openUrl(`https://${getTenant()}.meetsoci.com/internal/listings/listings_status.php?account_id=${a}`);
 });
 
 gmbTokenHealthBtn.addEventListener('click', () => {
-  const t = tenantInput.value.trim() || DEFAULT_TENANT;
-  const a = accountInput.value.trim();
+  const a = getAccountId();
   if (!a) return;
-  chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/listings/account_gmb_groups.php?account_id=${a}` });
+  openUrl(`https://${getTenant()}.meetsoci.com/internal/listings/account_gmb_groups.php?account_id=${a}`);
 });
 
 document.getElementById('super-duper-bo').addEventListener('click', () => {
-  const t = tenantInput.value.trim() || DEFAULT_TENANT;
-  chrome.tabs.create({ url: `https://${t}.meetsoci.com/internal/platform/index.php` });
+  openUrl(`https://${getTenant()}.meetsoci.com/internal/platform/index.php`);
 });
 
 accountInput.addEventListener('input', updateAccountButtons);
