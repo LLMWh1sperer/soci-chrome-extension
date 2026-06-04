@@ -3,6 +3,7 @@ const SOCI_PATTERN = /^https?:\/\/([^.]+)\.meetsoci\.com\/admin\/account\/(\d+)(
 const tenantInput = document.getElementById('tenant');
 const accountInput = document.getElementById('account');
 const projectInput = document.getElementById('project');
+const networkInput = document.getElementById('network');
 const goBtn = document.getElementById('go');
 const preview = document.getElementById('preview');
 const notSoci = document.getElementById('not-soci');
@@ -14,6 +15,10 @@ function getTenant() {
 
 function getAccountId() {
   return accountInput.value.trim();
+}
+
+function getNetwork() {
+  return (networkInput.value.trim() || 'gmb').toLowerCase();
 }
 
 function openUrl(url) {
@@ -94,7 +99,7 @@ superBoBtn.addEventListener('click', () => {
 listingStatusBtn.addEventListener('click', () => {
   const a = getAccountId();
   if (!a) return;
-  openUrl(`https://${getTenant()}.meetsoci.com/internal/listings/listings_status.php?account_id=${a}`);
+  openUrl(`https://${getTenant()}.meetsoci.com/internal/listings/listings_status.php?account_id=${a}&network=${getNetwork()}`);
 });
 
 gmbTokenHealthBtn.addEventListener('click', () => {
