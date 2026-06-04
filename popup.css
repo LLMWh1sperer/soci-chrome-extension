@@ -9,7 +9,7 @@ body {
   font-size: 13px;
   background: #1a1a2e;
   color: #e0e0e0;
-  width: 260px;
+  width: 300px;
   padding: 16px;
 }
 
@@ -81,6 +81,7 @@ button {
   border-radius: 5px;
   font-size: 13px;
   font-weight: 600;
+  line-height: 1.2;
   cursor: pointer;
   transition: background 0.15s;
 }
@@ -114,11 +115,16 @@ button:active {
 }
 
 button.secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
   background: transparent;
   color: #4a6fff;
   border: 1px solid #3a5fee;
   margin-top: 0;
   font-size: 12px;
+  text-align: center;
 }
 
 button.secondary:hover {
@@ -136,4 +142,22 @@ button.secondary:disabled {
   color: #444;
   border-color: #333;
   cursor: default;
+}
+
+button.secondary.danger {
+  color: #ff8a8a;
+  border-color: #8a3f4f;
+}
+
+button.secondary.danger:hover {
+  background: rgba(255, 138, 138, 0.12);
+  border-color: #ff8a8a;
+  color: #ffb3b3;
+}
+
+button.secondary.danger:disabled,
+button.secondary.danger:disabled:hover {
+  background: transparent;
+  color: #444;
+  border-color: #333;
 }
