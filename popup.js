@@ -9,6 +9,22 @@ const preview = document.getElementById('preview');
 const notSoci = document.getElementById('not-soci');
 const DEFAULT_TENANT = 'moz';
 
+function buildAdminUrlFromTenantInput(input) {
+  try {
+    const url = new URL(input.trim());
+    const localAppMatch = url.hostname.match(/^local-app\.([^.]+)\.com$/);
+    const pathMatch = url.pathname.match(/^\/admin\/account\/\d+\/office\/\d+\/project\/\d+\/?$/);
+    const tenant = localAppMatch?.[1];
+
+    if (!tenant || !pathMatch) return null;
+
+    const path = url.pathname.replace(/\/$/, '');
+    return `https://${tenant}.meetsoci.com${path}`;
+  } catch {
+    return null;
+  }
+}
+
 function getTenant() {
   return tenantInput.value.trim() || DEFAULT_TENANT;
 }
@@ -31,6 +47,9 @@ function openUrl(url) {
 }
 
 function buildUrl(tenant, accountId, projectId) {
+  const adminUrl = buildAdminUrlFromTenantInput(tenant);
+  if (adminUrl) return adminUrl;
+
   const t = tenant.trim() || DEFAULT_TENANT;
   const a = accountId.trim();
   const p = projectId.trim();
