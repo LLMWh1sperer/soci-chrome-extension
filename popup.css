@@ -42,6 +42,17 @@ h2 {
   margin-bottom: 10px;
 }
 
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.field-row .field {
+  margin-bottom: 0;
+}
+
 label {
   display: block;
   font-size: 11px;
