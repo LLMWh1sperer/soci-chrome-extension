@@ -4,6 +4,35 @@ const tenantInput = document.getElementById('tenant');
 const accountInput = document.getElementById('account');
 const projectInput = document.getElementById('project');
 const networkInput = document.getElementById('network');
+
+// Known SOCi listing network slugs, ordered by support frequency.
+// Free text is still allowed — this list only drives the autocomplete suggestions.
+// Add slugs here as new networks appear.
+const NETWORKS = [
+  'gmb',
+  'facebook',
+  'bing',
+  'yelp',
+  'apple_maps',
+  'foursquare',
+  'yellowpages',
+  'localeze',
+  'factual',
+  'here',
+  'navmii',
+  'tomtom',
+  'waze',
+  'iglobal',
+  'opendi',
+  'n49',
+];
+
+const networkOptions = document.getElementById('network-options');
+networkOptions.append(...NETWORKS.map(slug => {
+  const opt = document.createElement('option');
+  opt.value = slug;
+  return opt;
+}));
 const goBtn = document.getElementById('go');
 const preview = document.getElementById('preview');
 const notSoci = document.getElementById('not-soci');
