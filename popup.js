@@ -77,6 +77,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
   }
   updatePreview();
   updateAccountButtons();
+  refreshCreds();
 });
 
 tenantInput.addEventListener('input', updatePreview);
@@ -188,6 +189,47 @@ auditPublishBtn.addEventListener('click', () => {
 });
 
 accountInput.addEventListener('input', updateAccountButtons);
+
+// Credentials captured by the background worker from SOCi network requests
+const copyPhpsessidBtn = document.getElementById('copy-phpsessid');
+const copyRequestTokenBtn = document.getElementById('copy-request-token');
+const credsStatus = document.getElementById('creds-status');
+
+function credsHost() {
+  return `${getTenant()}.meetsoci.com`;
+}
+
+function refreshCreds() {
+  const host = credsHost();
+  chrome.storage.session.get(host, (data) => {
+    const creds = data[host] || {};
+    copyPhpsessidBtn.disabled = !creds.phpsessid;
+    copyRequestTokenBtn.disabled = !creds.request_token;
+    if (creds.phpsessid || creds.request_token) {
+      credsStatus.textContent = `captured for ${host}`;
+    } else {
+      credsStatus.textContent = `none yet for ${host}`;
+    }
+  });
+}
+
+function copyCred(field, btn) {
+  const host = credsHost();
+  chrome.storage.session.get(host, (data) => {
+    const value = (data[host] || {})[field];
+    if (!value) return;
+    navigator.clipboard.writeText(value).then(() => {
+      const original = btn.textContent;
+      btn.textContent = 'Copied';
+      setTimeout(() => { btn.textContent = original; }, 1200);
+    });
+  });
+}
+
+copyPhpsessidBtn.addEventListener('click', () => copyCred('phpsessid', copyPhpsessidBtn));
+copyRequestTokenBtn.addEventListener('click', () => copyCred('request_token', copyRequestTokenBtn));
+tenantInput.addEventListener('input', refreshCreds);
+refreshCreds();
 
 const ticketInput = document.getElementById('ticket');
 

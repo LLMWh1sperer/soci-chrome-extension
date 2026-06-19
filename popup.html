@@ -37,6 +37,17 @@
     <hr class="divider">
 
     <div class="field">
+      <label>Credentials</label>
+      <div class="btn-grid">
+        <button id="copy-phpsessid" class="secondary" disabled>Copy PHPSESSID</button>
+        <button id="copy-request-token" class="secondary" disabled>Copy request_token</button>
+      </div>
+      <div id="creds-status" class="preview muted"></div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="field">
       <label for="ticket">Ticket</label>
       <input id="ticket" type="text" placeholder="SO-83450 or 310821" spellcheck="false">
     </div>
