@@ -7,8 +7,8 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 13px;
-  background: #1a1a2e;
-  color: #e0e0e0;
+  background: #15211d;
+  color: #dfe7e3;
   width: 300px;
   padding: 16px;
 }
@@ -26,7 +26,7 @@ h2 {
 }
 
 .muted {
-  color: #888;
+  color: #8a9a92;
   font-size: 12px;
 }
 
@@ -56,7 +56,7 @@ h2 {
 label {
   display: block;
   font-size: 11px;
-  color: #aaa;
+  color: #9bafa5;
   margin-bottom: 4px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -65,28 +65,28 @@ label {
 input {
   width: 100%;
   padding: 7px 9px;
-  background: #2a2a3e;
-  border: 1px solid #3a3a5e;
+  background: #1e2c27;
+  border: 1px solid #2c403a;
   border-radius: 5px;
-  color: #e0e0e0;
+  color: #dfe7e3;
   font-size: 13px;
   outline: none;
   transition: border-color 0.15s;
 }
 
 input:focus {
-  border-color: #6c8fff;
+  border-color: #44c08a;
 }
 
 input::placeholder {
-  color: #555;
+  color: #56655e;
 }
 
 button {
   width: 100%;
   padding: 8px;
   margin-top: 4px;
-  background: #4a6fff;
+  background: #1f9d6b;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -98,11 +98,11 @@ button {
 }
 
 button:hover {
-  background: #6c8fff;
+  background: #25b87c;
 }
 
 button:active {
-  background: #3a5fee;
+  background: #1a875c;
 }
 
 .preview {
@@ -115,7 +115,7 @@ button:active {
 
 .divider {
   border: none;
-  border-top: 1px solid #2a2a3e;
+  border-top: 1px solid #243630;
   margin: 14px 0 12px;
 }
 
@@ -131,27 +131,27 @@ button.secondary {
   justify-content: center;
   min-height: 36px;
   background: transparent;
-  color: #4a6fff;
-  border: 1px solid #3a5fee;
+  color: #3fb87f;
+  border: 1px solid #2c6b50;
   margin-top: 0;
   font-size: 12px;
   text-align: center;
 }
 
 button.secondary:hover {
-  background: rgba(74, 111, 255, 0.12);
-  border-color: #6c8fff;
-  color: #6c8fff;
+  background: rgba(63, 184, 127, 0.12);
+  border-color: #44c08a;
+  color: #5fd29a;
 }
 
 button.secondary:active {
-  background: rgba(74, 111, 255, 0.2);
+  background: rgba(63, 184, 127, 0.2);
 }
 
 button.secondary:disabled {
   background: transparent;
-  color: #444;
-  border-color: #333;
+  color: #45554d;
+  border-color: #2a3a34;
   cursor: default;
 }
 
@@ -169,6 +169,6 @@ button.secondary.danger:hover {
 button.secondary.danger:disabled,
 button.secondary.danger:disabled:hover {
   background: transparent;
-  color: #444;
-  border-color: #333;
+  color: #45554d;
+  border-color: #2a3a34;
 }

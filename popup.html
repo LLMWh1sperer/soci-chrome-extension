@@ -6,7 +6,14 @@
 </head>
 <body>
   <div id="app">
-    <h2>SOCi URL Helper</h2>
+    <h2>SOCi Support Helper</h2>
+
+    <div class="field">
+      <label for="ticket">Ticket</label>
+      <input id="ticket" type="text" placeholder="SO-83450 or 310821" spellcheck="false">
+    </div>
+
+    <hr class="divider">
 
     <div id="not-soci" class="hidden">
       <p class="muted">Not a SOCi page.</p>
@@ -37,24 +44,6 @@
     <hr class="divider">
 
     <div class="field">
-      <label>Credentials</label>
-      <div class="btn-grid">
-        <button id="copy-phpsessid" class="secondary" disabled>Copy PHPSESSID</button>
-        <button id="copy-request-token" class="secondary" disabled>Copy request_token</button>
-      </div>
-      <div id="creds-status" class="preview muted"></div>
-    </div>
-
-    <hr class="divider">
-
-    <div class="field">
-      <label for="ticket">Ticket</label>
-      <input id="ticket" type="text" placeholder="SO-83450 or 310821" spellcheck="false">
-    </div>
-
-    <hr class="divider">
-
-    <div class="field">
       <label for="network">Network</label>
       <input id="network" type="text" value="gmb" placeholder="gmb" list="network-options" spellcheck="false" autocomplete="off">
       <datalist id="network-options"></datalist>
@@ -73,6 +62,17 @@
       <button id="por-network-status" class="secondary" disabled>POR Status</button>
       <button id="localeze-conflicts" class="secondary" disabled>Localeze Conflicts</button>
       <button id="audit-publish" class="secondary danger" disabled>Audit Publish</button>
+    </div>
+
+    <hr class="divider">
+
+    <div class="field">
+      <label>Credentials</label>
+      <div class="btn-grid">
+        <button id="copy-phpsessid" class="secondary" disabled>Copy PHPSESSID</button>
+        <button id="copy-request-token" class="secondary" disabled>Copy request_token</button>
+      </div>
+      <div id="creds-status" class="preview muted"></div>
     </div>
   </div>
 
