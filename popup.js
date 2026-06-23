@@ -262,6 +262,9 @@ refreshCreds();
 
 const ticketInput = document.getElementById('ticket');
 
+// Auto-focus the ticket box when the popup opens
+ticketInput.focus();
+
 ticketInput.addEventListener('keydown', e => {
   if (e.key !== 'Enter') return;
   const raw = ticketInput.value.trim();
