@@ -42,7 +42,7 @@ function buildAdminUrlFromTenantInput(input) {
   try {
     const url = new URL(input.trim());
     const localAppMatch = url.hostname.match(/^local-app\.([^.]+)\.com$/);
-    const pathMatch = url.pathname.match(/^\/admin\/account\/\d+\/office\/\d+\/project\/\d+\/?$/);
+    const pathMatch = url.pathname.match(/^\/admin\/account\/\d+\/office\/\d+\/project\/\d+(\/|$)/);
     const tenant = localAppMatch?.[1];
 
     if (!tenant || !pathMatch) return null;
