@@ -1,4 +1,5 @@
 const SOCI_PATTERN = /^https?:\/\/([^.]+)\.meetsoci\.com\/admin\/account\/(\d+)(?:\/office\/\d+\/project\/(\d+))?/;
+const SOCI_HOST_PATTERN = /^https?:\/\/([^.]+)\.meetsoci\.com\//;
 
 const tenantInput = document.getElementById('tenant');
 const accountInput = document.getElementById('account');
@@ -101,8 +102,13 @@ chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
     accountInput.value = match[2];
     if (match[3]) projectInput.value = match[3];
   } else {
-    notSoci.classList.remove('hidden');
-    tenantInput.value = DEFAULT_TENANT;
+    const hostMatch = tab.url.match(SOCI_HOST_PATTERN);
+    if (hostMatch) {
+      tenantInput.value = hostMatch[1];
+    } else {
+      notSoci.classList.remove('hidden');
+      tenantInput.value = DEFAULT_TENANT;
+    }
   }
   updatePreview();
   updateAccountButtons();
