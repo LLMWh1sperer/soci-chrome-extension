@@ -266,6 +266,36 @@ copyRequestTokenBtn.addEventListener('click', () => copyCred('request_token', co
 tenantInput.addEventListener('input', refreshCreds);
 refreshCreds();
 
+// Zendesk cookie — captured from meetsoci.zendesk.com requests (fixed host, not
+// tenant-dependent). One click copies the full Cookie header for the zd-mcp tool.
+const ZENDESK_HOST = 'meetsoci.zendesk.com';
+const copyZendeskCookieBtn = document.getElementById('copy-zendesk-cookie');
+const zendeskCookieStatus = document.getElementById('zendesk-cookie-status');
+
+function refreshZendeskCookie() {
+  chrome.storage.session.get(ZENDESK_HOST, (data) => {
+    const cookie = (data[ZENDESK_HOST] || {}).cookie;
+    copyZendeskCookieBtn.disabled = !cookie;
+    zendeskCookieStatus.textContent = cookie
+      ? `captured (${cookie.length} chars) — then run zd-cookie`
+      : 'none yet — open a meetsoci.zendesk.com tab';
+  });
+}
+
+copyZendeskCookieBtn.addEventListener('click', () => {
+  chrome.storage.session.get(ZENDESK_HOST, (data) => {
+    const cookie = (data[ZENDESK_HOST] || {}).cookie;
+    if (!cookie) return;
+    navigator.clipboard.writeText(cookie).then(() => {
+      const original = copyZendeskCookieBtn.textContent;
+      copyZendeskCookieBtn.textContent = 'Copied — now run zd-cookie';
+      setTimeout(() => { copyZendeskCookieBtn.textContent = original; }, 1600);
+    });
+  });
+});
+
+refreshZendeskCookie();
+
 const ticketInput = document.getElementById('ticket');
 
 // Auto-focus the ticket box when the popup opens

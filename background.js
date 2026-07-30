@@ -38,3 +38,31 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
   { urls: SOCI_URLS },
   ['requestHeaders', 'extraHeaders']
 );
+
+// Zendesk: capture the FULL Cookie header sent to meetsoci.zendesk.com so the
+// popup can copy the whole session-cookie string in one click (feeds the zd-mcp
+// tool's ~/.config/zd-mcp/cookie file). The Zendesk session cookies are HttpOnly,
+// so the request Cookie header is the only reliable source — same technique as
+// PHPSESSID above, just the entire header value rather than one cookie.
+const ZENDESK_URLS = ['*://meetsoci.zendesk.com/*'];
+
+chrome.webRequest.onBeforeSendHeaders.addListener(
+  (details) => {
+    let host;
+    try {
+      host = new URL(details.url).hostname;
+    } catch {
+      return;
+    }
+    const cookie = (details.requestHeaders || [])
+      .find(h => h.name.toLowerCase() === 'cookie')?.value;
+    if (!cookie) return;
+
+    chrome.storage.session.get(host, (data) => {
+      const current = data[host] || {};
+      chrome.storage.session.set({ [host]: { ...current, cookie } });
+    });
+  },
+  { urls: ZENDESK_URLS },
+  ['requestHeaders', 'extraHeaders']
+);

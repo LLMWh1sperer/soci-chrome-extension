@@ -4,7 +4,7 @@
   "version": "1.0",
   "description": "SOCi support shortcuts: build admin URLs, look up tickets, grab session credentials, and jump to internal listings tools",
   "permissions": ["tabs", "activeTab", "webRequest", "storage"],
-  "host_permissions": ["*://*.meetsoci.com/*"],
+  "host_permissions": ["*://*.meetsoci.com/*", "*://meetsoci.zendesk.com/*"],
   "background": {
     "service_worker": "background.js"
   },
