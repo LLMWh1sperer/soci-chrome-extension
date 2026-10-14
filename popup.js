@@ -67,11 +67,6 @@ function getNetwork() {
   return (networkInput.value.trim() || 'gmb').toLowerCase();
 }
 
-function getAuditNetwork() {
-  const network = getNetwork();
-  return network === 'gmb' ? 'google_maps' : network;
-}
-
 function openUrl(url) {
   chrome.tabs.create({ url });
 }
@@ -135,24 +130,12 @@ goBtn.addEventListener('click', () => {
 const listingsToolsBtn = document.getElementById('listings-tools');
 const kickListingsBtn = document.getElementById('kick-listings');
 const kickListingsLegacyBtn = document.getElementById('kick-listings-legacy');
-const superBoBtn = document.getElementById('super-bo');
 const listingStatusBtn = document.getElementById('listing-status');
-const listingImagesStatusBtn = document.getElementById('listing-images-status');
-const gmbTokenHealthBtn = document.getElementById('gmb-token-health');
-const publishProjectsBtn = document.getElementById('publish-projects');
-const porNetworkStatusBtn = document.getElementById('por-network-status');
-const localezeConflictsBtn = document.getElementById('localeze-conflicts');
-const auditPublishBtn = document.getElementById('audit-publish');
 
 function updateAccountButtons() {
   const hasAccount = !!getAccountId();
   kickListingsLegacyBtn.disabled = !hasAccount;
   listingStatusBtn.disabled = !hasAccount;
-  listingImagesStatusBtn.disabled = !hasAccount;
-  gmbTokenHealthBtn.disabled = !hasAccount;
-  porNetworkStatusBtn.disabled = !hasAccount;
-  localezeConflictsBtn.disabled = !hasAccount;
-  auditPublishBtn.disabled = !hasAccount;
 }
 
 listingsToolsBtn.addEventListener('click', () => {
@@ -169,58 +152,14 @@ kickListingsLegacyBtn.addEventListener('click', () => {
   openUrl(`https://${getTenant()}.meetsoci.com/internal/listings/kick_listings_publishing.php?account_id=${a}`);
 });
 
-superBoBtn.addEventListener('click', () => {
-  openUrl(`https://${getTenant()}.meetsoci.com/admin/super/0/backoffice`);
-});
-
 listingStatusBtn.addEventListener('click', () => {
   const a = getAccountId();
   if (!a) return;
   openUrl(`https://${getTenant()}.meetsoci.com/internal/listings/listings_status.php?account_id=${a}&network=${getNetwork()}`);
 });
 
-listingImagesStatusBtn.addEventListener('click', () => {
-  const a = getAccountId();
-  if (!a) return;
-  openUrl(`https://${getTenant()}.meetsoci.com/internal/listings/listings_images_status.php?account_id=${a}`);
-});
-
-gmbTokenHealthBtn.addEventListener('click', () => {
-  const a = getAccountId();
-  if (!a) return;
-  openUrl(`https://${getTenant()}.meetsoci.com/internal/listings/account_gmb_groups.php?account_id=${a}`);
-});
-
-document.getElementById('super-duper-bo').addEventListener('click', () => {
-  openUrl(`https://${getTenant()}.meetsoci.com/internal/platform/index.php`);
-});
-
-publishProjectsBtn.addEventListener('click', () => {
-  openUrl(`https://${getTenant()}.meetsoci.com/internal/listings/publish_projects_by_network.php`);
-});
-
-porNetworkStatusBtn.addEventListener('click', () => {
-  const a = getAccountId();
-  if (!a) return;
-  openUrl(`https://${getTenant()}.meetsoci.com/internal/listings/por_location_network_statuses.php?account_id=${a}&network=${getNetwork()}`);
-});
-
-localezeConflictsBtn.addEventListener('click', () => {
-  const a = getAccountId();
-  if (!a) return;
-  openUrl(`https://${getTenant()}.meetsoci.com/internal/listings/localeze_ownership_conflicts.php?search_type=account&search_value=${a}`);
-});
-
-auditPublishBtn.addEventListener('click', () => {
-  const t = getTenant();
-  const a = getAccountId();
-  const network = getAuditNetwork();
-  if (!a) return;
-
-  const confirmed = confirm(`Run account-level audit publish?\n\nTenant: ${t}\nAccount: ${a}\nNetwork: ${network}`);
-  if (!confirmed) return;
-
-  openUrl(`https://${t}.meetsoci.com/internal/listings/audit_network_dashboard.php?network=${network}&account_id=${a}&publish=1`);
+document.getElementById('apple-api-get').addEventListener('click', () => {
+  openUrl('https://app.meetsoci.com/internal/listings/apple_maps_get.php');
 });
 
 accountInput.addEventListener('input', updateAccountButtons);
