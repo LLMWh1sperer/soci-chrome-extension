@@ -21,6 +21,7 @@ After pulling updates, click **Reload** for the extension on `chrome://extension
 - **Kick Listings Publishing** opens the account-specific internal page. It is enabled once an Account ID is entered.
 - **Apple Maps API Get** opens the internal Apple Maps API Get page on `app.meetsoci.com`.
 - **Listing Status** opens the account-specific status page using the selected **Network**. The Network field defaults to `gmb`, suggests common network slugs, and accepts free text. Listing Status is enabled once an Account ID is entered.
+- **Apple Maps Delete** opens the internal Apple Maps deletion tool on `app.meetsoci.com`. The shortcut only opens the page; any deletion is a separate action within that tool.
 
 ## Credentials
 

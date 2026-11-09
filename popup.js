@@ -162,6 +162,10 @@ document.getElementById('apple-api-get').addEventListener('click', () => {
   openUrl('https://app.meetsoci.com/internal/listings/apple_maps_get.php');
 });
 
+document.getElementById('apple-api-delete').addEventListener('click', () => {
+  openUrl('https://app.meetsoci.com/internal/listings/apple_maps_delete.php');
+});
+
 accountInput.addEventListener('input', updateAccountButtons);
 
 // Credentials captured by the background worker from SOCi network requests
